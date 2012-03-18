@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.joragupra</groupId>
+		<artifactId>knoss</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>com.joragupra</groupId>
+	<artifactId>view</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+
+	<name>view</name>
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.joragupra</groupId>
+			<artifactId>controller</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.joragupra</groupId>
+			<artifactId>model</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>knoss</finalName>
+	</build>
+</project>

@@ -1,0 +1,143 @@
+<?xml version = '1.0' encoding = 'windows-1252'?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+  <form-beans>
+    <form-bean name="DataForm" type="oracle.adf.controller.struts.forms.BindingContainerActionForm"/>
+    <form-bean name="beanBuscador" 
+               type="view.BeanBuscador"/>
+    
+    <!-- Bean que almacena y comprueba el estado del formulario de 
+         registro para nuevos usuarios -->
+    <form-bean name="beanUsuario" 
+               type="view.BeanUsuario"/>
+    
+    <!-- Bean que almacena y comprueba el estado del formulario de
+         entrada en el sistema para usuarios registrados -->
+    <form-bean name="beanLogin" 
+               type="view.BeanLogin"/>
+               
+    <!-- Bean que almacena y comprueba el estado del formulario de
+         pedidos -->
+    <form-bean name="beanPedido" 
+               type="view.BeanPedido"/>
+    
+    <!-- Bean que almacena y comprueba el estado del formulario de 
+         cambio de contraseña para usuarios registrados -->
+    <form-bean name="beanPassword" 
+               type="view.BeanPassword"/>
+               
+    <form-bean name="usuarioFormulario" 
+               type="view.BeanUsuario"/>
+               
+  </form-beans>
+  <action-mappings>
+  
+    <!-- Accion realizada al entrar en la apliacion web -->
+    <action path="/home" 
+            type="view.HomeAction"
+            unknown="true">
+      <forward name="success" path="/home.jsp"/>
+    </action>
+    
+    <!-- Accion realizada al buscar un libro mediante el buscador
+         que ofrece la aplicacion -->
+    <action name="beanBuscador" 
+            path="/buscar" 
+            type="view.BuscarAction" 
+            input="buscador.jsp"
+            scope="session" >
+      <forward name="encontrado" path="/resultado.do"/>
+      <forward name="noencontrado" path="/busquedaVacia.do"/>
+    </action>
+    <action path="/resultado" forward="/resultado.jsp"/>
+    <action path="/busquedaVacia" forward="/busquedaVacia.jsp"/>
+    
+    <!-- Accion realizada al consultar los detalles de un libro -->
+    <action path="/verLibro" type="view.VerLibroAction">
+      <forward name="libroEncontrado" path="/detallesLibro.do"/>
+    </action>
+    <action path="/detallesLibro" forward="/detallesLibro.jsp"/>
+    
+    <!-- Accion realizada al buscar los libros correspondientes a
+         una categoria -->
+    <action path="/buscarPorCategoria" type="view.BuscarPorCategoriaAction">
+      <forward name="categoriaEncontrada" path="/resultado.do"/>
+    </action>
+
+    <!-- Accion realizada al validar a un usuario en el sistema -->
+    <action path="/comprobarUsuario" 
+            type="view.ComprobarUsuarioAction"
+            input="denegarAutenticacion.jsp"
+            name="beanLogin"
+            scope="session">
+      <forward name="logged" path="/confirmarAutenticacion.do"/>
+      <forward name="notlogged" path="/denegarAutenticacion.do"/>
+    </action>
+    <action path="/confirmarAutenticacion" forward="/confirmarAutenticacion.jsp"/>
+    <action path="/denegarAutenticacion" forward="/denegarAutenticacion.jsp"/>
+
+    <!-- Accion realizada al cambiar la contraseña de un 
+         usuario registrado -->
+    <action path="/cambiarPassword" 
+            type="view.CambiarPasswordAction"
+            name="beanPassword"
+            input="cambioPassword.jsp"
+            scope="request" >
+      <forward name="success" path="/confirmarCambioPassword.do"/>
+    </action>
+    <action path="/confirmarCambioPassword" forward="/confirmarCambioPassword.jsp"/>
+    
+    <!-- Accion realizada el abandonar un usuario registrado el
+         sistema -->
+    <action path="/abandonarSistema" type="view.AbandonarSistemaAction">
+      <forward name="loggedout" path="/confirmarSalida.do"/>
+    </action>
+    <action path="/confirmarSalida" forward="/confirmarSalida.jsp"/>
+    
+    <!-- Accion realizada al registrar un nuevo usuario en el sistema -->
+    <action path="/registrarUsuario" 
+            type="view.RegistrarUsuarioAction" 
+            input="registroUsuario.jsp" 
+            name="beanUsuario"
+            scope="request">
+      <forward name="registrado" path="/confirmarRegistro.do"/>
+      <forward name="noregistrado" path="/denegarRegistro.do"/>
+    </action>
+    <action path="/confirmarRegistro" forward="/confirmarRegistro.jsp"/>
+    <action path="/denegarRegistro" forward="/denegarRegistro.jsp"/>
+  
+    <!-- Accion realizada al consultar un usuario registrado su
+         carrito de la compra -->
+    <action path="/consultarCarrito" type="view.ConsultarCarritoAction">
+      <forward name="success" path="/detallesCarrito.do"/>
+    </action>
+    <action path="/detallesCarrito" forward="/detallesCarrito.jsp"/>
+    
+    <!-- Accion realizada al añadir un usuario registrado un libro
+         a su carrito de la compra -->
+    <action path="/anadirAlCarrito" type="view.AnadirAlCarritoAction">
+      <forward name="success" path="/confirmarLibroAnadido.do"/>
+    </action>
+    <action path="/confirmarLibroAnadido" forward="/confirmarLibroAnadido.jsp"/>
+    
+    <!-- Accion realizada al hacer un pedido de libros -->
+    <action path="/realizarPedido" 
+            type="view.RealizarPedidoAction"
+            input="registroPedido.jsp"
+            name="beanPedido">
+      <forward name="success" path="/confirmarPedido.do"/>
+    </action>
+    <action path="/confirmarPedido" forward="/confirmarPedido.jsp"/>
+    
+    <action path="/error" forward="/error.jsp"/>
+    
+    <!-- Accion realizada al consultar los pedidos realizados
+         por un usuario -->
+    <action path="/consultarPedidos" type="view.ConsultarPedidosAction">
+      <forward name="success" path="/pedidosRealizados.do"/>
+    </action>
+    <action path="/pedidosRealizados" forward="/pedidosRealizados.jsp"/>
+    
+  </action-mappings>
+  <message-resources parameter="view.ApplicationResources"/>
+</struts-config>
